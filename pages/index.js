@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import "react-tabs/style/react-tabs.css";
-import Meta from "../components/Meta";
 import Confetti from "../components/confetti";
 import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
