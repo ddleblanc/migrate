@@ -130,7 +130,7 @@ export default function Home() {
                       <span>{balance}</span>
                     </button>
                   }          
-                  {!realAddress && <ConnectWallet />}
+              <ConnectWallet />
                   {/* {!realAddress &&
                     <button onClick={connectWithMetamask} className="dark:bg-jacarta-800  dark:hover:bg-jacarta-700 hover:bg-jacarta-50 text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent dark:text-white dark:hover:border-transparent">
                       <img
