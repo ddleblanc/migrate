@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Confetti from "../components/confetti";
-import { useDisconnect, ConnectWallet, useAddress, useMetamask } from "@thirdweb-dev/react";
+import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
 import { useTheme } from "next-themes";
+import WalletButton from "../components/wallet-btn/WalletButton";
+import { useMetaMask } from "metamask-react";
+
 
 export default function Home() {
+  const { status, connect, account, chainId, ethereum } = useMetaMask();
   const [isVisible, setIsVisible] = useState(false);
   const [balance, setBalance] = useState();
   const [balanceHex, setBalanceHex] = useState();
@@ -15,7 +19,6 @@ export default function Home() {
   const [tierOfReward, setTierOfReward] = useState()
   const [balanceMsg, setBalanceMsg] = useState();
   const disconnect = useDisconnect();
-  const connectWithMetamask = useMetamask();
   const { theme, setTheme } = useTheme();
   (function(){
     setTheme("dark");
@@ -26,7 +29,7 @@ export default function Home() {
     setBalance(null)
   }
 
-  const realAddress = useAddress();
+  const realAddress = account;
   
   return (
     <div>
@@ -90,7 +93,9 @@ export default function Home() {
                       <span>Login with Metamask</span>
                     </button>
                   } */}
+                  <WalletButton />
                     {
+                      account &&
                     !balance &&
                     <>
                     <Web3Button
