@@ -1,37 +1,23 @@
 import "../styles/globals.css";
 import { ThemeProvider } from "next-themes";
-import { createClient, configureChains, defaultChains, WagmiConfig } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
-import { SessionProvider } from 'next-auth/react';
-import { Provider } from "react-redux";
-import { store } from "../redux/store";
 import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
-
-const { provider, webSocketProvider } = configureChains(defaultChains, [publicProvider()]);
-
-const client = createClient({
-  provider,
-  webSocketProvider,
-  autoConnect: true,
-});
-
-
+import { useTheme } from "next-themes";
 
 function MyApp({ Component, pageProps }) {
+  const { theme, setTheme } = useTheme();
+  
+
+  (function(){
+    setTheme("dark");
+})();
 
   return (
     <>
-      <Provider store={store}>
       <ThirdwebProvider desiredChainId={ChainId.BinanceSmartChainMainnet}>
-        <WagmiConfig client={client}>
-          <SessionProvider session={pageProps.session} refetchInterval={0}>
-            <ThemeProvider enableSystem={true} attribute="class">
+            <ThemeProvider enableSystem={false} attribute="class">
               <Component {...pageProps} />
             </ThemeProvider>
-          </SessionProvider>
-        </WagmiConfig>
         </ThirdwebProvider>
-      </Provider>
     </>
   );
 }
