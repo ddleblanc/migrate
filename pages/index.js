@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import Confetti from "../components/confetti";
 import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
@@ -109,6 +110,7 @@ export default function Home() {
                       >
                       {balanceMsg ? balanceMsg : "Get Balance"}
                     </Web3Button> 
+                    {isVisible && <Confetti />}   
                     </>    
                     }
                     {realAddress &&
