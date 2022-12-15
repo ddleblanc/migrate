@@ -15,6 +15,8 @@ const client = createClient({
   autoConnect: true,
 });
 
+
+
 function MyApp({ Component, pageProps }) {
 
   return (

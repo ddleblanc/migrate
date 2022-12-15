@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import "react-tabs/style/react-tabs.css";
 import Confetti from "../components/confetti";
 import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
+import DarkMode from "../components/mode/DarkMode"
 
 
 export default function Home() {
-  const { theme, setTheme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
   const [balance, setBalance] = useState();
   const [balanceHex, setBalanceHex] = useState();
@@ -19,7 +18,7 @@ export default function Home() {
   const [tierOfReward, setTierOfReward] = useState()
   const [balanceMsg, setBalanceMsg] = useState();
   const disconnect = useDisconnect();
-  if (theme === "dark") setTheme("light");
+
 
   const disconnectWallet = async () => {
     disconnect()
@@ -113,7 +112,7 @@ export default function Home() {
                   Need support?
                 </a>
               </p>
-
+         
               {/* {balance && 
                 <Approve balance={balance} />
               }  */}
@@ -129,8 +128,11 @@ export default function Home() {
                       />
                       <span>{balance}</span>
                     </button>
-                  }          
+                  }   
+                    
+                  {!realAddress &&    
                  <ConnectWallet />
+                 }
                   {/* {!realAddress &&
                     <button onClick={connectWithMetamask} className="dark:bg-jacarta-800  dark:hover:bg-jacarta-700 hover:bg-jacarta-50 text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent dark:text-white dark:hover:border-transparent">
                       <img
@@ -141,6 +143,7 @@ export default function Home() {
                       <span>Login with Metamask</span>
                     </button>
                   } */}
+
                     {realAddress &&
                     !balance &&
                     <>
