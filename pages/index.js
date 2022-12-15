@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Confetti from "../components/confetti";
-import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
+import { useDisconnect, ConnectWallet, useAddress, useMetamask } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
 
@@ -14,6 +14,7 @@ export default function Home() {
   const [tierOfReward, setTierOfReward] = useState()
   const [balanceMsg, setBalanceMsg] = useState();
   const disconnect = useDisconnect();
+  const connectWithMetamask = useMetamask();
 
   const disconnectWallet = async () => {
     disconnect()
@@ -76,9 +77,14 @@ export default function Home() {
                       <span>{balance}</span>
                     </button>
                   }            
-                  {!realAddress &&    
+                  {/* {!realAddress &&    
                  <ConnectWallet />
-                 }
+                 } */}
+                 {!realAddress &&
+                    <button onClick={connectWithMetamask} className="dark:bg-jacarta-800  dark:hover:bg-jacarta-700 hover:bg-jacarta-50 text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent dark:text-white dark:hover:border-transparent">
+                      <span>Login with Metamask</span>
+                    </button>
+                  }
                     {realAddress &&
                     !balance &&
                     <>
@@ -184,7 +190,7 @@ export default function Home() {
                     <Web3Button
                       contractAddress={"0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc"}
                       action={(contract) =>
-                        contract.call("balanceOfBatch", [realAddress, realAddress, realAddress, realAddress, realAddress, realAddress, realAddress], [1,2,3,4,5,6,7])
+                        contract.call("balanceOfBatch", [realAddress, realAddress, realAddress, realAddress], [0,1,2,3])
                       }
                       onSuccess={(res)=>{
                         for(let i = 0; i > res.length; i++){
