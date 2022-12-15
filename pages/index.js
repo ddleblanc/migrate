@@ -4,6 +4,7 @@ import Confetti from "../components/confetti";
 import { useDisconnect, ConnectWallet, useAddress, useMetamask } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
+import { useTheme } from "next-themes";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,6 +16,10 @@ export default function Home() {
   const [balanceMsg, setBalanceMsg] = useState();
   const disconnect = useDisconnect();
   const connectWithMetamask = useMetamask();
+  const { theme, setTheme } = useTheme();
+  (function(){
+    setTheme("dark");
+})();
 
   const disconnectWallet = async () => {
     disconnect()
@@ -80,12 +85,12 @@ export default function Home() {
                   {/* {!realAddress &&    
                  <ConnectWallet />
                  } */}
-                 {!realAddress &&
+                 {/* {!realAddress &&
                     <button onClick={connectWithMetamask} className="dark:bg-jacarta-800  dark:hover:bg-jacarta-700 hover:bg-jacarta-50 text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent dark:text-white dark:hover:border-transparent">
                       <span>Login with Metamask</span>
                     </button>
-                  }
-                    {realAddress &&
+                  } */}
+                    {
                     !balance &&
                     <>
                     <Web3Button
