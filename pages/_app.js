@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
     <Provider store={store}>
-      <ThirdwebProvider desiredChainId={ChainId.BinanceSmartChainMainnet} autoConnect>
+      <ThirdwebProvider desiredChainId={ChainId.BinanceSmartChainMainnet}>
             <ThemeProvider enableSystem={false} attribute="class">
             <MetaMaskProvider>
               <Component {...pageProps} />
