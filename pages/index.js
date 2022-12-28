@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Confetti from "../components/confetti";
-import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
+import { useDisconnect, ConnectWallet, account, useAddress } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
 import { useTheme } from "next-themes";
