@@ -70,7 +70,6 @@ export default function Home() {
                   Need support?
                 </a>
               </p>
-              {/* <!-- Tabs Nav --> */}
               <div>
                   {balance && 
                     <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
@@ -193,9 +192,7 @@ export default function Home() {
                         contract.call("balanceOfBatch", [realAddress, realAddress, realAddress, realAddress], [0,1,2,3])
                       }
                       onSuccess={(res)=> {
-                        for(let i = 0; i > res.length; i++){
-                          setTierOfReward(parseInt(res[i]))
-                        }
+                        setTierOfReward(parseInt(res[i]))
                         console.log({tier: tierOfReward})     
                       }}
                       onError={(res)=>{
@@ -205,7 +202,7 @@ export default function Home() {
                         console.log("Calling balanceOf")
                       }}
                       >
-                      {tierOfReward ? `Tier: ${tierOfReward}` : "Reveal Reward"}
+                      {tierOfReward ? `Tier: ${tierOfReward}` : "Claim Your NFT"}
                     </Web3Button>
                     }
                   </div>
