@@ -10,7 +10,7 @@ import { useMetaMask } from "metamask-react";
 
 
 export default function Home() {
-  const { status, connect, account, chainId, ethereum } = useMetaMask();
+  const { status, connect, chainId, ethereum } = useMetaMask();
   const [isVisible, setIsVisible] = useState(false);
   const [balance, setBalance] = useState();
   const [balanceHex, setBalanceHex] = useState();
@@ -111,7 +111,7 @@ export default function Home() {
                           setBalance(parseInt(res))
                           setBalanceHex(res)
                         } else {
-                          setIsVisible(true)
+                          
                           setBalanceMsg("Insufficient Funds")
                           setTimeout(()=>{
                             setBalanceMsg(null)
@@ -126,8 +126,7 @@ export default function Home() {
                       }}
                       >
                       {balanceMsg ? balanceMsg : "Get Balance"}
-                    </Web3Button> 
-                    {isVisible && <Confetti />}   
+                    </Web3Button>   
                     </>    
                     }
                     {realAddress &&
