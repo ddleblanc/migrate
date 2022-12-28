@@ -5,12 +5,9 @@ import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
 import { useTheme } from "next-themes";
-import WalletButton from "../components/wallet-btn/WalletButton";
-import { useMetaMask } from "metamask-react";
 
 
 export default function Home() {
-  const { status, connect, account, chainId, ethereum } = useMetaMask();
   const [isVisible, setIsVisible] = useState(false);
   const [balance, setBalance] = useState();
   const [balanceHex, setBalanceHex] = useState();
@@ -29,12 +26,11 @@ export default function Home() {
     setBalance(null)
   }
 
-  const realAddress = account;
+  const realAddress = useAddress();
   
   return (
     <div>
-                  {/* <ConnectWallet /> */}
-      <section className="relative h-screen">
+     <section className="relative h-screen">
         <div className="lg:flex h-full">
           {/* <!-- Left --> */}
           <div className="relative text-center lg:w-1/2 h-1/2 lg:h-[100%]">
@@ -86,17 +82,11 @@ export default function Home() {
                       <span>{balance}</span>
                     </button>
                   }            
-                 {/* {!realAddress &&
-                    <button onClick={connectWithMetamask} className="dark:bg-jacarta-800  dark:hover:bg-jacarta-700 hover:bg-jacarta-50 text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent dark:text-white dark:hover:border-transparent">
-                      <span>Login with Metamask</span>
-                    </button>
-                  } */}
                        {!realAddress &&
                     <ConnectWallet />
                   }
-                  {/* <WalletButton /> */}
                     {
-                      account &&
+                      realAddress &&
                     !balance &&
                     <>
                     <Web3Button
@@ -124,7 +114,7 @@ export default function Home() {
                         console.log("Calling balanceOf")
                       }}
                       >
-                      {balanceMsg ? balanceMsg : "Get Balance"}
+                      {balanceMsg ? balanceMsg : "Step 1: Get Balance"}
                     </Web3Button> 
                     {isVisible && <Confetti />}   
                     </>    
@@ -156,7 +146,7 @@ export default function Home() {
                         console.log("address")
                       }}
                       >
-                      approve
+                      Step 2: Approve
                     </Web3Button>
                     }
                     {realAddress &&
@@ -168,10 +158,10 @@ export default function Home() {
                       contractAddress={approvalContract}
                       contractAbi={approvalAbi}
                       action={(contract) =>{
-                        contract.call("migrate").catch((err)=>{
+                        contract.call("migrate").catch((err)=> {
                           console.log(err)
                           setIsApproved(false)
-                        }).then((res)=>{
+                        }).then((res)=> {
                           if(res.receipt.status !== 1) return
                           setIsVisible(true)
                           setIsMigrated(true)
@@ -191,7 +181,7 @@ export default function Home() {
                         console.log("address")
                       }}
                       >
-                      Migrate
+                      Step 3: Migrate
                     </Web3Button>
                     {isVisible && <Confetti />}
                     </>
@@ -202,11 +192,9 @@ export default function Home() {
                       action={(contract) =>
                         contract.call("balanceOfBatch", [realAddress, realAddress, realAddress, realAddress], [0,1,2,3])
                       }
-                      onSuccess={(res)=>{
+                      onSuccess={(res)=> {
                         for(let i = 0; i > res.length; i++){
-                          if(parseInt(res[i]) > 0) {
-                            setTierOfReward(parseInt(res[i]))
-                          }
+                          setTierOfReward(parseInt(res[i]))
                         }
                         console.log({tier: tierOfReward})     
                       }}
