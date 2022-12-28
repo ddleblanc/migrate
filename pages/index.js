@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Confetti from "../components/confetti";
-import { useDisconnect, ConnectWallet, account, useAddress } from "@thirdweb-dev/react";
+import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
 import { useTheme } from "next-themes";
@@ -10,7 +10,7 @@ import { useMetaMask } from "metamask-react";
 
 
 export default function Home() {
-  const { status, connect, chainId, ethereum } = useMetaMask();
+  const { status, connect, account, chainId, ethereum } = useMetaMask();
   const [isVisible, setIsVisible] = useState(false);
   const [balance, setBalance] = useState();
   const [balanceHex, setBalanceHex] = useState();
@@ -111,7 +111,6 @@ export default function Home() {
                           setBalance(parseInt(res))
                           setBalanceHex(res)
                         } else {
-                          
                           setBalanceMsg("Insufficient Funds")
                           setTimeout(()=>{
                             setBalanceMsg(null)
@@ -126,7 +125,8 @@ export default function Home() {
                       }}
                       >
                       {balanceMsg ? balanceMsg : "Get Balance"}
-                    </Web3Button>   
+                    </Web3Button> 
+                    {isVisible && <Confetti />}   
                     </>    
                     }
                     {realAddress &&
