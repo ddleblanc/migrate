@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Confetti from "../components/confetti";
 import { useDisconnect, ConnectWallet, useAddress } from "@thirdweb-dev/react";
-import ReactPlayer from 'react-player';
+import dynamic from 'next/dynamic'
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
 import { useTheme } from "next-themes";
@@ -35,13 +36,26 @@ export default function Home() {
         <div className="lg:flex h-full">
           {/* <!-- Left --> */}
           <div className="relative text-center lg:w-1/2 h-1/2 lg:h-[100%]">
+          {!tierOfReward && 
             <img
               src="/images/login.webp"
               alt="login"
               className="absolute h-full w-full object-cover"
             />
+          }
+          
+
+            {tierOfReward && 
+            isVisible && 
+            <>
+            <Confetti />
+            <ReactPlayer src={`videos/${tierOfReward}.mp4`} url='videos/1.mp4' autoplay={true} playing loop muted width="100%" height="100%"/>
+            </>
+            }
+           
             {/* <!-- Logo --> */}
-            <Link href="/">
+            {!tierOfReward && 
+              <Link href="/">
               <a className="relative inline-block py-36">
                 <img
                   src="/images/logo_white.png"
@@ -50,6 +64,8 @@ export default function Home() {
                 />
               </a>
             </Link>
+            }
+           
           </div>
 
           {/* <!-- Right --> */}
@@ -74,11 +90,13 @@ export default function Home() {
               <div>
                   {balance && 
                     <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
-                      <img
-                        src="/images/wallets/torus_24.svg"
-                        className="mr-2.5 inline-block h-6 w-6"
-                        alt=""
-                      />
+                          {!isApproved &&
+              <img
+              src="/images/logo.png"
+              className="mr-2.5 inline-block h-6 w-6"
+              alt=""
+              />
+                     }
                       <span>{balance}</span>
                     </button>
                   }            
@@ -119,7 +137,6 @@ export default function Home() {
                       >
                       {balanceMsg ? balanceMsg : "Step 1: Get Balance"}
                     </Web3Button> 
-                    {isVisible && <Confetti />}   
                     </>    
                     }
                     {realAddress &&
@@ -166,7 +183,7 @@ export default function Home() {
                         }).then((res)=> {
                           console.log(res)
                           if(res.receipt.status !== 1) return
-                          setIsVisible(true)
+ 
                           setIsMigrated(true)
                           setBalance("Migration Succesful")
 
@@ -203,6 +220,7 @@ export default function Home() {
                             setTierOfReward(i)
                           }
                         }
+                        setIsVisible(true)
                         
                         console.log({tier: tierOfReward})     
                       }}
