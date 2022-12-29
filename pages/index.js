@@ -195,7 +195,12 @@ export default function Home() {
                       }
                       onSuccess={(res)=> {
                         console.log(res)
-                        setTierOfReward(parseInt(res[0]))
+                        for(let i = 0; i < res.length; i++){
+                          if(parseInt(res[i] > 0)) {
+                            setTierOfReward(i)
+                          }
+                        }
+                        
                         console.log({tier: tierOfReward})     
                       }}
                       onError={(res)=>{
