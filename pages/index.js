@@ -194,7 +194,8 @@ export default function Home() {
                         contract.call("balanceOfBatch", [realAddress, realAddress, realAddress, realAddress], [0,1,2,3])
                       }
                       onSuccess={(res)=> {
-                        setTierOfReward(parseInt(res[i]))
+                        console.log(res)
+                        setTierOfReward(parseInt(res[0]))
                         console.log({tier: tierOfReward})     
                       }}
                       onError={(res)=>{
