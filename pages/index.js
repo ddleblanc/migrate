@@ -160,9 +160,6 @@ export default function Home() {
                       action={(contract) =>{
                         contract.call("migrate").catch((err)=>{
                           setIsApproved(false)
-                        })((err)=> {
-                          console.log(err)
-                          setIsApproved(false)
                         }).then((res)=> {
                           console.log(res)
                           if(res.receipt.status !== 1) return
