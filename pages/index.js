@@ -196,7 +196,7 @@ export default function Home() {
                       onSuccess={(res)=> {
                         console.log(res)
                         for(let i = 0; i < res.length; i++){
-                          if(parseInt(res[i] > 0)) {
+                          if(parseInt(res[i])  > 0) {
                             setTierOfReward(i)
                           }
                         }
