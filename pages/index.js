@@ -100,9 +100,9 @@ export default function Home() {
                       <span>{balance}</span>
                     </button>
                   }            
-                       {/* {!realAddress &&
+                       {!realAddress &&
                     <ConnectWallet />
-                  } */}
+                  }
                     {
                       realAddress &&
                     !balance &&
