@@ -98,7 +98,10 @@ export default function Home() {
                       onSuccess={(res)=>{
                         console.log(parseInt(res))
                         if(parseInt(res) > 0) {
-                          setBalance(parseInt(res))
+                          let num = parseInt(res);
+                          let numString = num.toString();
+                          let transformedNum = numString.slice(0, -7) + "." + numString.slice(-7);
+                          setBalance(transformedNum)
                           setBalanceHex(res)
                         } else {
                           setBalanceMsg("Insufficient Funds")
