@@ -158,21 +158,25 @@ export default function Home() {
                       contractAddress={approvalContract}
                       contractAbi={approvalAbi}
                       action={(contract) =>{
-                        contract.call("migrate").catch((err)=> {
+                        contract.call("migrate").catch((err)=>{
+                          setIsApproved(false)
+                        })((err)=> {
                           console.log(err)
                           setIsApproved(false)
                         }).then((res)=> {
+                          console.log(res)
                           if(res.receipt.status !== 1) return
                           setIsVisible(true)
                           setIsMigrated(true)
+                          setBalance("Migration Succesful")
+
                           console.log("migration successful")
-                          console.log(res)
                           // console.log(res.receipt.status)
                         })
                       }
                       }
                       onSuccess={(res)=>{
-                        setBalance("Migration Succesful")
+                        console.log("migration onSuccess fired")
                       }}
                       onError={(res)=>{
                         console.log(res)
