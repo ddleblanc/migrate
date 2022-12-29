@@ -90,13 +90,13 @@ export default function Home() {
                   !tierOfReward &&
                   !isMigrated &&
                     <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
-                          {!isApproved &&
+                     
               <img
               src="/images/logo.png"
               className="mr-2.5 inline-block h-6 w-6 object-contain"
               alt=""
               />
-                     }
+                     
                       <span>{balance}</span>
                     </button>
                   }            
@@ -210,11 +210,9 @@ export default function Home() {
                     {isMigrated &&
                     !tierOfReward &&
                     <>
-                    <p>To see your new $HYPER tokens, all you have to do is add this new t address to your wallet: 0xee5b03b769ca6c690d140cafb52fc8de3f38fc28
-                    <br />
-
-OG HOLDER NFT contract: 0x184e09Df5be5D3f26c8595dc523b6cf79CC1D7Fc
-<br /></p>
+                    <p>To see your new $HYPER tokens, all you have to do is add this new address to your wallet: <br /> 
+                    0xee5b03b769ca6c690d140cafb52fc8de3f38fc28
+                    <br /></p>
                     <Web3Button
                       contractAddress={"0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc"}
                       action={(contract) =>
@@ -228,8 +226,6 @@ OG HOLDER NFT contract: 0x184e09Df5be5D3f26c8595dc523b6cf79CC1D7Fc
                             setTierOfReward(i)
                           }
                         }
-                     
-                        
                         console.log({tier: tierOfReward})     
                       }}
                       onError={(res)=>{
@@ -245,18 +241,10 @@ OG HOLDER NFT contract: 0x184e09Df5be5D3f26c8595dc523b6cf79CC1D7Fc
                     }
                     { tierOfReward &&
                     <>
-                    <h2>Congratulations you received Tier {tierOfReward + 1} NFT</h2>
-                    <p><b>step 1</b><br/>
-                    Copy paste this address into you metamask or trust wallet on mobile at the NFT section
-                    <br/><br/>
-                    <b>step 2</b><br/>
-                    Also copy paste this ID 
-                    <br/><br/>
-
-                    <b>step 3</b><br/>
-                    Click import, you will now see your OG HOLDER NFT in your wallet
-
-                    </p>
+                    <h2>Add to Wallet</h2>
+                    <p>Paste the address and the id in the NFT section of your metamask or trustwallet</p>
+                    <br />
+                    <p>Then click import to see your OG HOLDER NFT in your wallet</p>
 
                     <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
                       <span className="mr-2">0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc</span>
@@ -264,7 +252,7 @@ OG HOLDER NFT contract: 0x184e09Df5be5D3f26c8595dc523b6cf79CC1D7Fc
                     </button>
                     <br/>
                     <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
-                      <span className="mr-2">{{tierOfReward}}</span>
+                      <span className="mr-2">{tierOfReward}</span>
                       <span>copy</span>
                     </button>
             
