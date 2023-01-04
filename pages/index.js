@@ -7,6 +7,8 @@ const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 import { Web3Button } from "@thirdweb-dev/react";
 import { migrationContract, abi, approvalContract, approvalAbi} from "../components/contracts";
 import { useTheme } from "next-themes";
+import { LoadingOverlay, CopyButton, Button, Tooltip, ActionIcon } from '@mantine/core';
+import { IconCopy, IconCheck } from '@tabler/icons';
 
 
 export default function Home() {
@@ -16,7 +18,16 @@ export default function Home() {
   const [isApproved, setIsApproved] = useState(false);
   const [isMigrated, setIsMigrated] = useState(false)
   const [tierOfReward, setTierOfReward] = useState()
+
+  // const [isVisible, setIsVisible] = useState(true);
+  // const [tierOfReward, setTierOfReward] = useState(1)
+  // const [isMigrated, setIsMigrated] = useState(true)
+  // const [isApproved, setIsApproved] = useState(true);
+  // const [balance, setBalance] = useState(1);
+
+
   const [balanceMsg, setBalanceMsg] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const disconnect = useDisconnect();
   const { theme, setTheme } = useTheme();
   (function(){
@@ -25,6 +36,10 @@ export default function Home() {
 
   const disconnectWallet = async () => {
     disconnect()
+    setIsApproved(false)
+    setIsMigrated(false)
+    setTierOfReward(null)
+    setIsVisible(false)
     setBalance(null)
   }
 
@@ -68,6 +83,13 @@ export default function Home() {
 
           {/* <!-- Right --> */}
           <div className="relative flex items-center justify-center p-[10%] lg:w-1/2 h-1/2 lg:h-[100%]">
+          <LoadingOverlay 
+      loaderProps={{ color: '#aaff26' }}
+      overlayOpacity={0.3}
+      overlayColor="#000000" 
+      visible={isLoading} 
+      overlayBlur={2}  
+      />
             <picture className="pointer-events-none absolute inset-0 -z-10 dark:hidden">
               <img
                 src="/images/gradient_light.jpg"
@@ -77,14 +99,25 @@ export default function Home() {
             </picture>
 
             <div className="w-full max-w-[25.625rem] text-center">
-              <h1 className="text-jacarta-700 font-display mb-6 text-4xl dark:text-white">
+            {!isMigrated &&
+              <h1 className="text-jacarta-700 font-display mb-4 text-4xl dark:text-white">
                 Migration
               </h1>
-              <p className="dark:text-jacarta-300 mb-16 text-lg leading-normal">
+            }
+            {isMigrated &&
+              <h1 className="text-jacarta-700 font-display mb-4 text-4xl dark:text-white">
+                Add to Wallet
+              </h1>
+            }
+             
+            {!tierOfReward &&
+              <p className="dark:text-jacarta-300 mb-8 text-lg leading-normal">
                 <a href="https://t.me/hyperchainx" className="text-sm">
                   Need support?
                 </a>
               </p>
+            }
+            
               <div>
                   {balance && 
                   !tierOfReward &&
@@ -115,6 +148,7 @@ export default function Home() {
                       }
                       onSuccess={(res)=>{
                         console.log(parseInt(res))
+                        setIsLoading(false)
                         if(parseInt(res) > 0) {
                           let num = parseInt(res);
                           let numString = num.toString();
@@ -132,6 +166,7 @@ export default function Home() {
                         console.log(res)
                       }}
                       onSubmit={(res)=>{
+                        setIsLoading(true)
                         console.log("Calling balanceOf")
                       }}
                       >
@@ -149,6 +184,7 @@ export default function Home() {
                         contract.call("approve", approvalContract, balanceHex).catch((err)=>{
                           setIsApproved(false)
                         }).then((res)=>{
+                          setIsLoading(false)
                           if(res.receipt.status !== 1) return
                           setIsApproved(true)
                           // console.log(res.receipt.status)
@@ -163,6 +199,7 @@ export default function Home() {
                         console.log('approval error')
                       }}
                       onSubmit={()=>{
+                        setIsLoading(true)
                         console.log("address")
                       }}
                       >
@@ -181,6 +218,7 @@ export default function Home() {
                         contract.call("migrate").catch((err)=>{
                           setIsApproved(false)
                         }).then((res)=> {
+                          setIsLoading(false)
                           console.log(res)
                           if(res.receipt.status !== 1) return
  
@@ -199,6 +237,7 @@ export default function Home() {
                         console.log(res)
                       }}
                       onSubmit={()=>{
+                        setIsLoading(true)
                         console.log("address")
                       }}
                       >
@@ -208,17 +247,29 @@ export default function Home() {
                     </>
                     }
                     {isMigrated &&
+                      isApproved &&
                     !tierOfReward &&
                     <>
-                    <p>To see your new $HYPER tokens, all you have to do is add this new address to your wallet: <br /> 
-                    0xee5b03b769ca6c690d140cafb52fc8de3f38fc28
-                    <br /></p>
+                    <p className="mb-10 normal-case">Add this address to your wallet to see your new $HYPER tokens: <br /> <br />
+                    <CopyButton value="0xee5b03b769ca6c690d140cafb52fc8de3f38fc28" color="dark">
+                    {({ copied, copy }) => (
+                      <Button color={copied ? 'dark' : 'dark'} onClick={copy}>
+                        {copied ? 'Copied' : '0xee5b..fc28'} 
+                          <span className="ml-2">
+                          {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+                          </span>
+                      </Button>
+                    )}
+                  </CopyButton>
+                    </p>
+ 
                     <Web3Button
                       contractAddress={"0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc"}
                       action={(contract) =>
                         contract.call("balanceOfBatch", [realAddress, realAddress, realAddress, realAddress], [0,1,2,3])
                       }
                       onSuccess={(res)=> {
+                        setIsLoading(false)
                         console.log(res)
                         setIsVisible(true)
                         for(let i = 0; i < res.length; i++){
@@ -232,6 +283,7 @@ export default function Home() {
                         console.log(res)
                       }}
                       onSubmit={(res)=>{
+                        setIsLoading(true)
                         console.log("Calling balanceOf")
                       }}
                       >
@@ -241,20 +293,34 @@ export default function Home() {
                     }
                     { tierOfReward &&
                     <>
-                    <h2>Add to Wallet</h2>
-                    <p>Paste the address and the id in the NFT section of your metamask or trustwallet</p>
+                    <p className="normal-case">Paste the address and the id into the NFT section of your metamask or trustwallet to see your OG HOLDER NFT in your wallet</p>
                     <br />
-                    <p>Then click import to see your OG HOLDER NFT in your wallet</p>
 
-                    <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
+                    {/* <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
                       <span className="mr-2">0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc</span>
                       <span>copy</span>
-                    </button>
+                    </button> */}
+                    <CopyButton value="0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc" color="dark">
+                    {({ copied, copy }) => (
+                      <Button color={copied ? 'dark' : 'dark'} onClick={copy}>
+                        {copied ? 'Address Copied' : 'Reward Address'} 
+                          <span className="ml-2">
+                          {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+                          </span>
+                      </Button>
+                    )}
+                  </CopyButton>
                     <br/>
-                    <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
-                      <span className="mr-2">{tierOfReward}</span>
-                      <span>copy</span>
-                    </button>
+                    <CopyButton value={tierOfReward} color="dark">
+                    {({ copied, copy }) => (
+                      <Button color={copied ? 'dark' : 'dark'} onClick={copy}>
+                        {copied ? 'ID Copied' : 'Reward ID'} 
+                          <span className="ml-2">
+                          {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+                          </span>
+                      </Button>
+                    )}
+                  </CopyButton>
             
                     </>
                     }
