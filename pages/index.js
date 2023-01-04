@@ -293,7 +293,7 @@ export default function Home() {
                     }
                     { tierOfReward &&
                     <>
-                    <p className="normal-case">Paste the address and the id into the NFT section of your metamask or trustwallet to see your OG HOLDER NFT in your wallet</p>
+                    <p className="normal-case">Paste the address and the id into the NFT section of your metamask or trustwallet to see your OG HOLDER NFT in your wallet (Only viewable on mobile)</p>
                     <br />
 
                     {/* <button className="dark:bg-jacarta-900 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-jacarta-700 hover:bg-accent text-jacarta-700 mb-16 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white">
@@ -303,7 +303,7 @@ export default function Home() {
                     <CopyButton value="0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc" color="dark">
                     {({ copied, copy }) => (
                       <Button color={copied ? 'dark' : 'dark'} onClick={copy}>
-                        {copied ? 'Address Copied' : 'Reward Address'} 
+                        {copied ? 'Address Copied' : '0x184e..d7fc'} 
                           <span className="ml-2">
                           {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
                           </span>
