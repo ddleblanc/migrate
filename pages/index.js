@@ -53,7 +53,7 @@ export default function Home() {
           <div className="relative text-center lg:w-1/2 h-1/2 lg:h-[100%]">
           {!tierOfReward && 
             <img
-              src="/images/login.webp"
+              src="/images/bg.jpeg"
               alt="login"
               className="absolute h-full w-full object-cover"
             />
