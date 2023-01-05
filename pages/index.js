@@ -147,7 +147,7 @@ export default function Home() {
                         contract.call("balanceOf", realAddress)
                       }
                       onSuccess={(res)=>{
-                        console.log(parseInt(res))
+                        // console.log(parseInt(res))
                         setIsLoading(false)
                         if(parseInt(res) > 0) {
                           let num = parseInt(res);
@@ -163,11 +163,11 @@ export default function Home() {
                         }
                       }}
                       onError={(res)=>{
-                        console.log(res)
+                        // console.log(res)
                       }}
                       onSubmit={(res)=>{
                         setIsLoading(true)
-                        console.log("Calling balanceOf")
+                        // console.log("Calling balanceOf")
                       }}
                       >
                       {balanceMsg ? balanceMsg : "Step 1: Get Balance"}
@@ -192,15 +192,15 @@ export default function Home() {
                       }
                       }
                       onSuccess={(res)=>{
-                        console.log(`onSucces returns ${res}`)
+                        // console.log(`onSucces returns ${res}`)
                       }}
                       onError={(res)=>{
                         setIsApproved(false)
-                        console.log('approval error')
+                        // console.log('approval error')
                       }}
                       onSubmit={()=>{
                         setIsLoading(true)
-                        console.log("address")
+                        // console.log("address")
                       }}
                       >
                       Step 2: Approve
