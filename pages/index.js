@@ -219,7 +219,7 @@ export default function Home() {
                           setIsApproved(false)
                         }).then((res)=> {
                           setIsLoading(false)
-                          console.log(res)
+                          // console.log(res)
                           if(res.receipt.status !== 1) return
  
                           setIsMigrated(true)
@@ -231,14 +231,14 @@ export default function Home() {
                       }
                       }
                       onSuccess={(res)=>{
-                        console.log("migration onSuccess fired")
+                        // console.log("migration onSuccess fired")
                       }}
                       onError={(res)=>{
-                        console.log(res)
+                        // console.log(res)
                       }}
                       onSubmit={()=>{
                         setIsLoading(true)
-                        console.log("address")
+                        // console.log("address")
                       }}
                       >
                       Step 3: Migrate
@@ -270,21 +270,21 @@ export default function Home() {
                       }
                       onSuccess={(res)=> {
                         setIsLoading(false)
-                        console.log(res)
+                        // console.log(res)
                         setIsVisible(true)
                         for(let i = 0; i < res.length; i++){
                           if(parseInt(res[i])  > 0) {
                             setTierOfReward(i)
                           }
                         }
-                        console.log({tier: tierOfReward})     
+                        // console.log({tier: tierOfReward})     
                       }}
                       onError={(res)=>{
-                        console.log(res)
+                        // console.log(res)
                       }}
                       onSubmit={(res)=>{
                         setIsLoading(true)
-                        console.log("Calling balanceOf")
+                        // console.log("Calling balanceOf")
                       }}
                       >
                       {tierOfReward ? `Tier: ${tierOfReward}` : "Claim Your NFT"}
