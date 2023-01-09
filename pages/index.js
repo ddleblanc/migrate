@@ -300,18 +300,32 @@ export default function Home() {
                       <span className="mr-2">0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc</span>
                       <span>copy</span>
                     </button> */}
-                    <CopyButton value="0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc" color="dark">
+                    <div className="mb-2">
+                    <p className="text-jacarta-700 dark:text-white text-xs">0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc <span> <CopyButton value="0x184e09df5be5d3f26c8595dc523b6cf79cc1d7fc" color="dark">
                     {({ copied, copy }) => (
-                      <Button color={copied ? 'dark' : 'dark'} onClick={copy}>
-                        {copied ? 'Address Copied' : '0x184e..d7fc'} 
-                          <span className="ml-2">
+                  
+                          <div className="ml-2 inline-block"  onClick={copy}>
                           {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
-                          </span>
-                      </Button>
+                          </div>
+               
                     )}
-                  </CopyButton>
-                    <br/>
-                    <CopyButton value={tierOfReward} color="dark">
+                  </CopyButton></span>  </p>
+                 
+                    </div>
+
+                    <div>
+                    <p className="text-jacarta-700 dark:text-white">NFT ID: {tierOfReward} <span> <CopyButton value={tierOfReward} color="dark">
+                    {({ copied, copy }) => (
+                  
+                          <div className="ml-2 inline-block"  onClick={copy}>
+                          {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
+                          </div>
+               
+                    )}
+                  </CopyButton></span>  </p>
+                 
+                    </div>
+                    {/* <CopyButton value={tierOfReward} color="dark">
                     {({ copied, copy }) => (
                       <Button color={copied ? 'dark' : 'dark'} onClick={copy}>
                         {copied ? 'ID Copied' : 'Reward ID'} 
@@ -320,7 +334,7 @@ export default function Home() {
                           </span>
                       </Button>
                     )}
-                  </CopyButton>
+                  </CopyButton> */}
             
                     </>
                     }
